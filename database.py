@@ -1,7 +1,9 @@
+import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base
 
-DATABASE_URL = "postgresql://postgres:password@localhost:5432/todo_db"
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DATABASE_URL = f"postgresql://postgres:password@{DB_HOST}:5432/todo_db"
 
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

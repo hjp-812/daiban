@@ -1,3 +1,4 @@
+import os
 import uuid
 import hashlib
 from datetime import datetime, timedelta
@@ -8,7 +9,8 @@ from models import Base, User, Session, Todo
 
 fake = Faker('zh_CN')
 
-DATABASE_URL = "postgresql://postgres:password@localhost:5432/todo_db"
+DB_HOST = os.getenv("DB_HOST", "localhost")
+DATABASE_URL = f"postgresql://postgres:password@{DB_HOST}:5432/todo_db"
 engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 db = SessionLocal()

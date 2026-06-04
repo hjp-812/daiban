@@ -6,7 +6,6 @@ from datetime import datetime
 class TodoCreate(BaseModel):
     title: str
     content: Optional[str] = None
-    user_id: int
 
 
 class TodoUpdate(BaseModel):
