@@ -5,3 +5,5 @@ venv/
 .vscode/
 .idea/
 postgres_data/
+node_modules/
+dist/
