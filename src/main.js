@@ -1,4 +1,4 @@
-const API = '';
+const API = '__BACKEND_URL__';
 
 function getToken() { return localStorage.getItem('token'); }
 function getUsername() { return localStorage.getItem('username'); }

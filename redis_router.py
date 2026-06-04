@@ -11,8 +11,9 @@ router = APIRouter(
     tags=["Redis 缓存接口"]
 )
 
+REDIS_URL = os.getenv("REDIS_URL")
 REDIS_HOST = os.getenv("REDIS_HOST", "localhost")
-r = redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
+r = redis.Redis.from_url(REDIS_URL) if REDIS_URL else redis.Redis(host=REDIS_HOST, port=6379, db=0, decode_responses=True)
 
 
 # 获取当前登录用户的未完成 Todo 数量（带 Redis 缓存）
