@@ -1,3 +1,4 @@
+import time
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -6,8 +7,6 @@ from database import engine
 import DB_router
 import user_router
 import redis_router
-
-models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Todo List 后端系统")
 
@@ -23,6 +22,21 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.get("/")
 def root():
     return FileResponse("static/index.html")
+
+
+@app.on_event("startup")
+def startup():
+    """启动时建表，带重试，适应 Railway 等平台数据库延迟就绪的场景"""
+    max_retries = 10
+    for i in range(max_retries):
+        try:
+            models.Base.metadata.create_all(bind=engine)
+            return
+        except Exception:
+            if i < max_retries - 1:
+                time.sleep(3)
+            else:
+                raise
 
 
 if __name__ == "__main__":
