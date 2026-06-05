@@ -26,17 +26,22 @@ def root():
 
 @app.on_event("startup")
 def startup():
-    """启动时建表，带重试，适应 Railway 等平台数据库延迟就绪的场景"""
-    max_retries = 10
-    for i in range(max_retries):
+    """启动时建表，重试最多 60 秒"""
+    from database import DATABASE_URL
+    safe_url = DATABASE_URL.replace("://", "://***:***@") if "://" in DATABASE_URL else DATABASE_URL
+    print(f"[startup] 连接数据库: {safe_url}")
+
+    for i in range(20):
         try:
             models.Base.metadata.create_all(bind=engine)
+            print("[startup] 数据库表创建成功")
             return
-        except Exception:
-            if i < max_retries - 1:
+        except Exception as e:
+            print(f"[startup] 数据库未就绪 (第 {i+1}/20 次): {e}")
+            if i < 19:
                 time.sleep(3)
-            else:
-                raise
+
+    raise RuntimeError("数据库连接失败，已重试 20 次")
 
 
 if __name__ == "__main__":
