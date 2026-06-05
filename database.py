@@ -4,14 +4,12 @@ from sqlalchemy.orm import sessionmaker, declarative_base
 
 DATABASE_URL = os.getenv("DATABASE_URL")
 if DATABASE_URL:
-    # Railway 的 DATABASE_URL 使用 postgres:// 前缀，SQLAlchemy 需要 postgresql://
     if DATABASE_URL.startswith("postgres://"):
         DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+    engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 else:
-    DB_HOST = os.getenv("DB_HOST", "localhost")
-    DATABASE_URL = f"postgresql://postgres:password@{DB_HOST}:5432/todo_db"
-
-engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+    # 默认 SQLite，零依赖单容器部署
+    engine = create_engine("sqlite:///./todo.db", connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
