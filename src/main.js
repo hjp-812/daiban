@@ -10,6 +10,7 @@ function api(path, options = {}) {
     if (!(options.body instanceof FormData)) {
         headers['Content-Type'] = 'application/json';
     }
+    headers['ngrok-skip-browser-warning'] = '1';
     return fetch(API + path, { ...options, headers }).then(r => {
         if (!r.ok) return r.json().then(e => { throw e; });
         if (r.status === 204) return null;
