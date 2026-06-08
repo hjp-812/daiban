@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && git add docs/ && git commit -m \"deploy: update site\" && git push github master"
+    "deploy": "vite build && git add docs/ && git commit -m \"deploy: update site\" && git push origin master"
   },
   "devDependencies": {
     "vite": "^6.0.0"
