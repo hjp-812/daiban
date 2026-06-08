@@ -1,4 +1,4 @@
-const API = '__BACKEND_URL__';
+const API = 'https://recycled-mystify-mahogany.ngrok-free.dev';
 
 function getToken() { return localStorage.getItem('token'); }
 function getUsername() { return localStorage.getItem('username'); }

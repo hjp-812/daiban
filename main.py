@@ -1,5 +1,6 @@
 import time
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import models
@@ -9,6 +10,14 @@ import user_router
 import redis_router
 
 app = FastAPI(title="Todo List 后端系统")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # 注册 API 路由
 app.include_router(DB_router.router)
