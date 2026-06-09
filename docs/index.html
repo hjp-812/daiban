@@ -4,55 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo List</title>
-  <script type="module" crossorigin src="/daiban/assets/index-PKDC4QN7.js"></script>
-  <link rel="stylesheet" crossorigin href="/daiban/assets/index-CsLGm9eO.css">
+  <script type="module" crossorigin src="/daiban/assets/index-B5FfpCC2.js"></script>
+  <link rel="stylesheet" crossorigin href="/daiban/assets/index-wS4KND16.css">
 </head>
 <body>
     <div id="app">
-        <!-- 登录/注册界面 -->
         <div id="auth-panel" class="panel">
+            <div class="logo">&#x270F;</div>
             <h1>Todo List</h1>
+            <p class="subtitle">简洁高效的任务管理</p>
             <div class="tabs">
                 <button class="tab active" data-tab="login">登录</button>
                 <button class="tab" data-tab="register">注册</button>
             </div>
-
             <div id="login-form" class="form">
-                <input type="text" id="login-username" placeholder="用户名" autocomplete="username">
-                <input type="password" id="login-password" placeholder="密码" autocomplete="current-password">
-                <button class="btn btn-primary" onclick="login()">登录</button>
+                <div class="input-icon">
+                    <span class="icon">&#x1F464;</span>
+                    <input type="text" id="login-username" placeholder="用户名" autocomplete="username">
+                </div>
+                <div class="input-icon">
+                    <span class="icon">&#x1F512;</span>
+                    <input type="password" id="login-password" placeholder="密码" autocomplete="current-password">
+                </div>
+                <button class="btn btn-primary btn-full" onclick="login()">登 录</button>
             </div>
-
             <div id="register-form" class="form hidden">
-                <input type="text" id="reg-username" placeholder="用户名" autocomplete="username">
-                <input type="password" id="reg-password" placeholder="密码（至少6位）" autocomplete="new-password">
-                <button class="btn btn-primary" onclick="register()">注册</button>
+                <div class="input-icon">
+                    <span class="icon">&#x1F464;</span>
+                    <input type="text" id="reg-username" placeholder="用户名" autocomplete="username">
+                </div>
+                <div class="input-icon">
+                    <span class="icon">&#x1F512;</span>
+                    <input type="password" id="reg-password" placeholder="密码（至少6位）" autocomplete="new-password">
+                </div>
+                <button class="btn btn-primary btn-full" onclick="register()">注 册</button>
             </div>
         </div>
 
-        <!-- 主界面 -->
         <div id="main-panel" class="panel hidden">
             <div class="header">
-                <h1>我的待办</h1>
+                <div>
+                    <h1 class="app-title">&#x270F; 我的待办</h1>
+                </div>
                 <div class="header-right">
-                    <span id="username-display"></span>
-                    <button class="btn btn-sm" onclick="logout()">退出</button>
+                    <span class="avatar" id="avatar-display"></span>
+                    <span id="username-display" class="username"></span>
+                    <button class="btn btn-ghost" onclick="logout()">退出</button>
                 </div>
             </div>
 
-            <div class="stats">
-                <span id="todo-count">未完成: --</span>
-                <span id="cache-source"></span>
+            <div class="card stats-card">
+                <div class="stat">
+                    <span class="stat-value" id="todo-count">--</span>
+                    <span class="stat-label">未完成</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value" id="total-count">--</span>
+                    <span class="stat-label">总计</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat">
+                    <span class="stat-value" id="cache-badge">--</span>
+                    <span class="stat-label">数据源</span>
+                </div>
             </div>
 
-            <div class="add-todo">
-                <input type="text" id="todo-title" placeholder="新任务标题..." maxlength="200">
-                <input type="text" id="todo-content" placeholder="详细描述（可选）...">
-                <button class="btn btn-primary" onclick="addTodo()">添加</button>
+            <div class="card add-card">
+                <div class="input-row">
+                    <input type="text" id="todo-title" placeholder="&#x1F4CB; 新任务标题..." maxlength="200" autofocus>
+                    <input type="text" id="todo-content" placeholder="&#x1F4DD; 详细描述（可选）...">
+                </div>
+                <button class="btn btn-primary btn-add" onclick="addTodo()">&#x2795; 添加</button>
             </div>
 
             <div id="todo-list"></div>
+            <div id="empty-state" class="empty-state hidden">
+                <div class="empty-icon">&#x1F389;</div>
+                <p>暂无任务</p>
+                <span>添加你的第一个待办事项吧</span>
+            </div>
         </div>
+
+        <div id="toast" class="toast hidden"></div>
     </div>
 
 </body>
